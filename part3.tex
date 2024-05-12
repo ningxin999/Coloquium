@@ -1,83 +1,96 @@
 
-\section{\textcolor{orange}{Inverse uncertainty}}
+\section{\textcolor{black}{Uncertainty into UQ framework}}
 %----------------------------------------------
-\subsection{Uncertainty to be considered}
-
-%-----------------------------------------------------------------------------------
-\begin{frame}
-\frametitle{Choice for UQ inversion}
+%------------------------------------------------
+\begin{frame}\frametitle{Connecting physics with FE modelling}
+\begin{block}{Through an additive observation error:}
+  \begin{equation}
+ \label{eq: modelling_discrepancy}
+ \boldsymbol{y} = \mathcal{M}(\boldsymbol{x}) + \boldsymbol{\varepsilon}
+\end{equation}  
+\end{block}
 \begin{columns}
-    \column{0.5\textwidth}
-        Choice for the UQ method is totally based on the {\textcolor{red}{\textbf{quantity}}} of accessible data:
-        \begin{itemize}
-            \item  {\textcolor{red}{\textbf{Lack}}} or {\textcolor{red}{\textbf{no}}} data available, model can be solely based on expert judgement
-            \item {\textcolor{red}{\textbf{Substantial}}} volume data available, model can fully use statistical inference (e.g., the methods of moments)
-            \item {\textcolor{red}{\textbf{Combination}}} of two above: Bayesian methods
-            \begin{equation*}           \pi(\boldsymbol{x}|\mathcal{Y}) = \frac{{\mathcal{L}(\boldsymbol{x}|\mathcal{Y}) \cdot \pi(\boldsymbol{x})}}{{\pi(\mathcal{Y})}} 
-            \end{equation*}
-        \end{itemize}
-    
-    \column{0.5\textwidth}
-        \begin{figure}[!ht]       \includegraphics[scale=0.6]{figures/figure_objvssub.pdf}
-        \end{figure}
+\column{0.5\textwidth}
+The rationale behind the equation:
+\begin{itemize}
+    \item Assume observation error $\boldsymbol{\varepsilon}$ is additive
+    \item Assume $\boldsymbol{\varepsilon}$ Gaussian form
+\end{itemize}
+\column{0.5\textwidth}
+\begin{figure}[!ht]       
+\includegraphics[scale=0.8]{figures/figure-likelihood.pdf}
+\end{figure}
 \end{columns}
-    
+ 
 \end{frame}
 %===================================================================================================================
 \begin{frame}
-\frametitle{Posing the probabilistic problem}
-\begin{block}{Uncertainties in math form:}
+\begin{columns}
+    \column{0.5\textwidth}
+      \begin{figure} 
+ \includegraphics[scale=0.6]{figures/figure-TrunctionerrorandModeldiscrepancy.pdf}
+\end{figure}
+    \column{0.6\textwidth}
+    \begin{block}{Other uncertainties?}
+    \begin{itemize}
+    \item Observation error $\boldsymbol{\varepsilon}$
+    \item Model discrepancy $\delta(\boldsymbol{x})$
+    \item Numerical/truncation error $\eta({\boldsymbol{x}})$
+    \end{itemize}       
+    \end{block} 
+\end{columns}
+
+\begin{block}{Revised:}
 \begin{equation*}
-\mathcal{Y}_i = \tilde{\mathcal{M}}(\boldsymbol{x}_i,\boldsymbol{\theta}^{\star}) 
-+ \delta(\boldsymbol{x}_i)+
-\boldsymbol{\epsilon}_{i}, i=1,\cdots,N
+\label{eq: COV_uncertainties}
+\begin{aligned}
+%https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/1467-9868.00294
+     \boldsymbol{y}
+= &&
+{\mathcal{M}}(\boldsymbol{x}) + {\delta(\boldsymbol{x})}
++ \boldsymbol{\varepsilon} \\
+= &&
+\tilde{\mathcal{M}}(\boldsymbol{x})
++ \eta({\boldsymbol{x}})
++ \delta(\boldsymbol{x})
++ \boldsymbol{\varepsilon}
+\end{aligned}
 \end{equation*}
-$\mathcal{Y}_i$: observation; $\boldsymbol{x}_i$: control inputs; $\boldsymbol{\theta}^{\star}$: true value of calibrated parameters; $\tilde{\mathcal{M}}$: forward model; $\delta$: model discrepancy; $\boldsymbol{\epsilon}_{i}$: observation error  
 \end{block}
 
-\begin{block}{Three speficic types of uncertainties (mixed with aleatoric and epistemic): }
-\begin{itemize}
-    \item observation error
-    \item model discrepancy
-    \item input space uncertainties
-\end{itemize}    
-\end{block}
-
-\begin{alertblock}{Should we consider aleatoric uncertainty (irreducible) in the inversion process?}
-\begin{itemize}
-    \item Or all burden will be shared by other epistemic uncertainty \alert{unreasonably}
-\end{itemize}
-    
-\end{alertblock}
- 
+\begin{alert}{Question: where should the uncertainties go to?}
+\begin{equation*}               
+\pi(\boldsymbol{x}|\mathcal{Y}) = 
+\frac{{\textcolor{red}{\mathcal{L}(\boldsymbol{x}|\mathcal{Y})} \cdot \pi(\boldsymbol{x})}}{{\pi(\mathcal{Y})}}
+= \frac{{\textcolor{red}{\mathcal{L}(\boldsymbol{x}|\mathcal{Y})} \cdot \pi(\boldsymbol{x})}}
+{\int_{\mathcal{D}_{\boldsymbol{X}}} 
+    \pi(\boldsymbol{x}) \pi(\mathcal{Y}|\boldsymbol{x}) {\rm{d}} \boldsymbol{x}}
+\end{equation*}    
+\end{alert}  
 \end{frame}
-
-
-
-
-
-
-
+%===================================================================================================================
 %--------------------------------------------------------------------------------
-\subsection{How likelihood dealing with uncertainties?}
 \begin{frame}
+\frametitle{Incorporate uncertainties into $\mathcal{L}(\boldsymbol{x}|\mathcal{Y})$}
     
 
-\begin{block}{If only consider a Gaussian type observation error}
+\begin{block}{If only consider observations error $\boldsymbol{\varepsilon}$}
 \begin{equation*}
-\mathcal{Y}_i = \tilde{\mathcal{M}}(\boldsymbol{x}_i,\boldsymbol{\theta}^{\star}) +\boldsymbol{\epsilon}_{i}, i=1,\cdots,N
+\boldsymbol{y}_i = \tilde{\mathcal{M}}(\boldsymbol{x})
++ \boldsymbol{\varepsilon}, i=1,\cdots,k; \ \boldsymbol{\varepsilon} \in \mathcal{N}(\boldsymbol{\varepsilon}|\boldsymbol{0},\boldsymbol{\Sigma})
 \end{equation*}
 \begin{equation*}        
         \label{eq: Likelihood function}
-        \begin{aligned}
-         \mathcal{L}(\boldsymbol{\theta}|\mathcal{Y}) =& \prod_{i=1}^{N} N(\mathcal{Y}_{i}|\tilde{\mathcal{M}}(\boldsymbol{x}_i,\boldsymbol{\theta}),\boldsymbol{\Sigma}) \\
-         =& \prod_{i=1}^{N}\frac{1}{\sqrt{(2 \pi)^{N_{\rm{out}}}{\rm{det}}         (\boldsymbol{\Sigma})}}\exp\left(-\frac{1}{2}\left(\mathcal{Y}_{i} - \tilde{\mathcal{M}}(\boldsymbol{x}_i,\boldsymbol{\theta})\right)^{\mathsf{T}} \boldsymbol{\Sigma}^{-1}\left(\mathcal{Y}_{i} - \tilde{\mathcal{M}}(\boldsymbol{x}_i,\boldsymbol{\theta})\right)\right) 
-        \end{aligned}
+\begin{aligned}
+ \mathcal{L}(\boldsymbol{x}|\mathcal{Y}) =& \prod_{i=1}^{k} N(\boldsymbol{y}_i|\tilde{\mathcal{M}}(\boldsymbol{x}),\boldsymbol{\Sigma}) \\
+ =& \prod_{i=1}^{k}\frac{1}{\sqrt{(2 \pi)^{N}{\rm{det}} 
+ (\boldsymbol{\Sigma})}}\exp\left(-\frac{1}{2}\left(\boldsymbol{y}_i - \tilde{\mathcal{M}}(\boldsymbol{x}\right)^{\mathsf{T}} \boldsymbol{\Sigma}^{-1}\left(\boldsymbol{y}_i - \tilde{\mathcal{M}}(\boldsymbol{x}\right)\right)
+\end{aligned}
         \end{equation*}  
 \end{block}
 
-\begin{alertblock}{In real life, only one source of uncertainty is not convincing enough}
-\begin{figure}[!ht]       \includegraphics[scale=0.55]{figures/figure-CoVUncertainty.pdf}
+\begin{alertblock}{Incorporate all uncertainties into $\boldsymbol{\Sigma}$}
+\begin{figure}[!ht]       \includegraphics[scale=0.45]{figures/figure-CoVUncertainty.pdf}
 \end{figure}
     
 \end{alertblock}
@@ -86,14 +99,12 @@ $\mathcal{Y}_i$: observation; $\boldsymbol{x}_i$: control inputs; $\boldsymbol{\
 \end{frame}
 %--------------------------------------------------------------------------------
 \begin{frame}
-\frametitle{Bayesian inference}
+\frametitle{Bayesian inference results}
 \begin{block}{Difficulty with calculating evidence $\pi(\mathcal{Y})$}
-\begin{equation*}               \pi(\boldsymbol{x}|\mathcal{Y}) = 
-\frac{{\mathcal{L}(\boldsymbol{x}|\mathcal{Y}) \cdot \pi(\boldsymbol{x})}}{{\pi(\mathcal{Y})}}
-= \frac{{\mathcal{L}(\boldsymbol{x}|\mathcal{Y}) \cdot \pi(\boldsymbol{x})}}
-{\int_{\mathcal{D}_{\boldsymbol{X}}} 
-    \pi(\boldsymbol{x}) \pi(\mathcal{Y}|\boldsymbol{x}) {\rm{d}} \boldsymbol{x}}
-\end{equation*}  
+\begin{equation*}               
+\textcolor{red}{\pi(\boldsymbol{x}|\mathcal{Y})} = 
+\frac{{\mathcal{L}(\boldsymbol{x}|\mathcal{Y})} \cdot \pi(\boldsymbol{x})}{{\pi(\mathcal{Y})}}
+\end{equation*}
 \end{block}
 
 Computing evidence ${\pi(\mathcal{Y})}$ is not a tractable problem. A common strategy is using \textit{conjugate priors}  
@@ -108,78 +119,6 @@ Computing evidence ${\pi(\mathcal{Y})}$ is not a tractable problem. A common str
 {\mathcal{L}(\boldsymbol{x}|\mathcal{Y}) \cdot \pi(\boldsymbol{x})}
 \end{equation*}     
 \end{block}
-Samples from the posterior can be obtained through \textit{Sampling methods} or \textit{Optimization methods}
+Samples from the posterior can be obtained through \textit{Sampling methods} or \textit{Optimization methods}: \textit{MCMC}, \textit{variational methods},...
 \end{frame}
 %-------------------------------------------------------------------------------------------
-\subsection{Sampling methods}
-\begin{frame}
-\only<1>{
-\begin{definition}
-\textbf{Optimisation based approximation}: This method usually refers to variational inference. The basic principle is adopting some analytical distributions to approximate the posterior based on some loss functions
-\end{definition}
-
-\begin{block}{PROS and CONS:}
- \begin{itemize}
-     \item[\scalebox{1.5} {\color{green}\checkmark}] computational efficient and work well with large model
-     \item[\scalebox{1.5} {\color{green}\checkmark}] has absolute converging criteria which makes easy t odetermine when to stop
-     \item[\scalebox{1.5}{\color{red}$\times$}] unlikely to discover the globally optimal solution
-     \item[\scalebox{1.5}{\color{red}$\times$}] precision constrained by the structure of approximaiton
-     
- \end{itemize}   
-\end{block}
-}
-
-
-\only<2>{
-\begin{definition}
-\textbf{Monte Carlo sampling}: These techniques produce random samples from a proposal distribution, utilizing
-them to estimate both the posterior distribution and the associated statistics
-\end{definition}
-
-Some are:
-\begin{itemize}
-    \item probability density tranform
-    \item rejection sampling
-    \item importance sampling
-    \item sequential Monte Carlo (e.g., particle filtering)
-    \item Markov Chain Monte Carlo (MH, HMC, AIES)
-\end{itemize}
-
-}
-
-    
-\end{frame}
-
-
-
-%------------------------------------------------------------------------------------
-\begin{frame}
-\frametitle{SMC vs MCMC}
-\only<1>{
-\begin{quote}
-    ... non-iterative methods for generating independent
-samples..., we discuss an iterative method known as Markov Chain Monte
-Carlo, or \alert{MCMC} for short, which produces dependent samples but \alert{which works well in high
-dimensions}...\footfullcite{murphy2012}
-\end{quote}
-
-
-}
-
-\only<2>{
-
-\begin{columns}
-    \column{0.45\textwidth}
-    \begin{block}{SMC} \animategraphics[autoplay,loop,width=\textwidth]{1}{figures-gif/PF/particlefilter-}{0}{12}        
-    \end{block}
-    Source:\hyperlink{https://medium.com/@mathiasmantelli/particle-filter-part-3-motion-and-measurement-models-be79857a5490}{weblink}
-    \column{0.45\textwidth}
-     \begin{block}{MCMC} \animategraphics[autoplay,loop,width=\textwidth]{1}{figures-gif/MCMC/MCMC-}{1}{26}        
-    \end{block} 
-    Source:\hyperlink{https://www.cdslab.org/DSP2019F/announcement/0-student-professor-connection-day}{weblink}
-\end{columns}
-
-}
-
-\end{frame}
-

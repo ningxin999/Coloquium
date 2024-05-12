@@ -23,7 +23,7 @@
 {\raggedright\insertcaption\par} 
 
 
-\usepackage[backend=bibtex,sorting=none]{biblatex}
+\usepackage[style=verbose]{biblatex}
 \addbibresource{ref.bib} 
 
 %add algorthim package
@@ -32,8 +32,8 @@
 \usepackage{cleveref}
 \renewcommand*{\algorithmcfname}{}
 \renewcommand{\thealgocf}{Algorithm \ \arabic{algocf}}
-
-
+%control the footnote fontsize
+\renewcommand{\footnotesize}{\tiny}
 
 % Add sources 
 \usepackage[absolute,overlay]{textpos}
@@ -142,7 +142,7 @@
 % Outer themes change the overall layout of slides, such as: header and footer lines, sidebars and slide titles. Uncomment each theme in turn to see what changes it makes to your presentation.
 
 %\useoutertheme{default}
-%\useoutertheme{infolines}
+\useoutertheme{infolines}
 %\useoutertheme{miniframes}
 %\useoutertheme{smoothbars}
 %\useoutertheme{sidebar}
@@ -168,4 +168,46 @@
   \end{beamercolorbox}
   \vfill
   \end{frame}
+}
+
+
+
+
+%tikz packages
+
+\usepackage{tikz}
+\usepackage{adjustbox}
+
+
+\usetikzlibrary{arrows.meta,
+                chains, automata,
+                positioning,
+                shapes.geometric,
+                %bayesnet,
+                backgrounds,
+                decorations.pathreplacing
+                }
+
+\newcommand{\edgex}[3][style={-latex}]{% edge with a new style <<<
+	% Connect all nodes #2 to all nodes #3.
+	\foreach \x in {#2} { %
+		\foreach \y in {#3} { %
+			\draw[#1,->] (\x) -- (\y) ;%
+		} ;
+	} ;
+}
+\tikzset{
+  main/.style={circle, minimum size = 1.1cm, thick, draw =black!80, node distance = 10mm}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%Appendix setting
+\newcommand{\backupbegin}{
+   \newcounter{finalframe}
+   \setcounter{finalframe}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \setcounter{framenumber}{\value{finalframe}}
 }

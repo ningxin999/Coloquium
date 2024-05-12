@@ -1,19 +1,43 @@
 
-\section{\textcolor{orange}{Some UQ problems and components}}
+\section{\textcolor{black}{UQ framework and components}}
+%------------------------------------------------
 \begin{frame}
-	\frametitle{Two types of UQ problem}
-	\framesubtitle{} % Optional subtitle
-        \begin{figure}
-            \includegraphics[scale=0.7]{figures/figure-UQ_steps.pdf}
-        \end{figure}
+\frametitle{Experiments, Models, Simulations, and UQ}
+\begin{figure}
+\includegraphics[scale=0.6]{figures/figure-UQ_physics_Model_Simulation.pdf}
+\end{figure}
 \end{frame}
 
 %------------------------------------------------
-
-\subsection{Computational model}
 \begin{frame}
-	\frametitle{Component one: computational model}
-	\framesubtitle{} % Optional subtitle
+\textbf{\frametitle{UQ problems and components}
+\only<1>{
+\begin{figure}
+\includegraphics[scale=0.9]{figures/figure-UQ_components.pdf}
+\end{figure}}
+}
+\only<2>{
+\begin{block}{Two UQ types of problems:}
+  \begin{figure}
+\includegraphics[width=6.5cm]{figures/figure_UQ_propagation_inversion.pdf}
+\end{figure}  
+\end{block}
+\begin{block}{Four components:}
+\begin{enumerate}
+    \item Uncertainty propagation
+    \item Model calibration
+    \item Sensitivity analysis
+    \item Optimal experimental design
+\end{enumerate}  
+\end{block}
+
+}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}
+\framesubtitle{} % Optional subtitle
 \begin{definition}
   A computational model should contain:
     \begin{itemize}
@@ -32,29 +56,15 @@
         \end{matrix}\right.
         \end{equation}
         }
-
-
+        
 \only<2>{
-KJHH model in excavation in predict the deflection \cite{hsein2013}: 
-\begin{equation}
-\begin{aligned}
-    \delta_{hm}(mm) = &a_0 + a_{1}X_1+ a_{2}X_2+ a_{3}X_3+ a_{4}X_4+ a_{5}X_5 + \\
-    & a_{6}X_{1}X_{2}+ a_{7}X_{1}X_{3} + a_{8}X_{1}X_{5}
-\end{aligned}
-\end{equation}
-where $X_1$ is the excavation depth, $X_2$ is $EI/\gamma_{w}h_{avg}^{4}$ support stiffness, ...
+\begin{figure}
+    \includegraphics[scale=0.8]{figures/figure-qpeak.pdf}\footfullcite{li2018}
+\end{figure}
 }
-
 
 \only<3>{
-A model in predict peak resistance\cite{li2018}:
-
-\begin{figure}
-    \includegraphics[scale=0.9]{figures/figure-qpeak.pdf}
-\end{figure}  
-}
-
-\only<4>{
+\bigskip
 Numerical methods:
 \begin{itemize}
     \item Finite element method
@@ -65,241 +75,141 @@ Numerical methods:
 \end{frame}
 
 %------------------------------------------------------------------------------------------------------------------------
-\subsection{Probabilistic input parameters}
+
+
+
+
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
-	\frametitle{Component two: probabilistic models of input parameters:}
-
- \begin{block}{No data exist:}
+ \frametitle{UQ components one-Uncertainty propagation}
+ \only<1>{
+ \begin{figure}
+    \includegraphics[scale=0.9]{figures/figure-UQcomponetone-propagation.pdf}
+\end{figure}
 \begin{itemize}
-    \item \alert{expert judgment} for selecting the input PDF's
-    \item literature, data bases (e.g., on material properties)
-    \item maximum entropy principle
+    \item \alert{Uncertainty propagation} feeds quantified input uncertainties through our model to produce probabilistic predictions of a QoI
 \end{itemize}
- \end{block}
+ }
 
-\begin{block}{Input data exist:}
-\begin{itemize}
-    \item classical statistical inference
-    \item \alert{Bayesian statistics} when data is scarce but there is some prior information
-\end{itemize}
- \end{block}
-
- \begin{block}{Data on output quantities:}
-\begin{itemize}
-    \item \alert{inverse} probabilistic methods and \alert{Bayesian updating} techniques 
-\end{itemize}
- \end{block}
- 
- \end{frame}
- 
- %-----------------------------------------------------------------------------------
-\subsection{Propagation based on Monte Carlo}
-\begin{frame}
-	\frametitle{Component three: principles of uncertainty propagation:}
-
-\only<1>{
-\begin{block}{Goal}
-    estimate the uncertainty/variability of the \textit{QoI} $\boldsymbol{Y} = \mathcal{M}(\boldsymbol{X})$ due to the uncertainty $f_{\boldsymbol{X}}$
-\end{block}
-
-\begin{columns}
-    \column{0.7\textwidth}
-    \begin{itemize}
-    \setlength\itemsep{0.5cm}
-        \item \alert{Output statistics}, i.e., mean, standard deviation. etc.
-        \begin{equation*}
-            \mu_{\boldsymbol{Y}} = \mathbb{E}_{\boldsymbol{X}}
-[\mathcal{M}(\boldsymbol{X}) ]
-        \end{equation*}
-        \begin{equation*}
-\sigma^2_{\boldsymbol{Y}} = \mathbb{E}_{\boldsymbol{X}}
-[(\mathcal{M}(\boldsymbol{X}) - \mu_{\boldsymbol{Y}})^2]
-        \end{equation*}
-
-      \item \alert{Distribution} of the QoI
-
-        \item \alert{Probability} of exceeding an admissible threshold $y_{adm}$
-       \begin{equation*}
-            P_{f} = \mathbb{P}(\boldsymbol{Y} \ge y_{adm})
-        \end{equation*}
- 
-    \end{itemize}
-    
-    \column{0.3\textwidth}
-    \begin{figure}
-        \includegraphics[scale=1.4]{figures/figure-UQpropagation.pdf}
-    \end{figure}    
-\end{columns}
-
-
-}
- \end{frame}
- %-----------------------------------------------------------------------------------
- \begin{frame}
- \frametitle{Uncertainty propagation based on Monte Carlo}
- \begin{block}{Principle}
-    Reproduce numerically the variability of the model parameters using a random number generator 
- \end{block}
-
-\begin{figure}
+ \only<2>{
+ \begin{figure}
     \includegraphics[scale=0.9]{figures/figure-UQ_propagation_MC.pdf}
 \end{figure}
+\begin{itemize}
+\setlength\itemsep{0.5cm}
+\item \alert{Output statistics}, i.e., mean, standard deviation. etc.
+\begin{equation*}
+    \mu_{\boldsymbol{Y}} = \mathbb{E}_{\boldsymbol{X}}
+[\mathcal{M}(\boldsymbol{X}) ]; \ 
+\sigma^2_{\boldsymbol{Y}} = \mathbb{E}_{\boldsymbol{X}}
+[(\mathcal{M}(\boldsymbol{X}) - \mu_{\boldsymbol{Y}})^2]
+\end{equation*}
+\item \alert{Distribution} of the QoI
+\item \alert{Probability} of exceeding an admissible threshold $y_{adm}$ following $P_{f} = \mathbb{P}(\boldsymbol{Y} \ge y_{adm})$
+\end{itemize}
+ }
+
 
 
  \end{frame}
+
  %---------------------------------------------------------------------------------------------------
 \begin{frame}
-\frametitle{Uncertainty propagation based on Monte Carlo}
-\framesubtitle{Pros and cons based on Monte Carlo:}
-
-\begin{columns}
-    \column{0.5\textwidth}
-    PROS:
-    \begin{itemize}
-        \item \textcolor{red}{Universal methods:} only rely upon simulating random sampling and repeated computational model
-        \item Suited to \textcolor{red}{HPC}
-        \item Sound statistical foundations: convergence when $N_{MCS} \rightarrow \infty$
-    \end{itemize}
-    CONS:
-    \begin{itemize}
-        \item \textcolor{red}{Statistical uncertainty}: results are not exactly reproducible
-        \item \textcolor{red}{Low efficiency:} convergence rate $\propto n^{-1/2}$
-    \end{itemize}
-    \column{0.5\textwidth}
-    
-
-\begin{example}{An example}
-      To compute $P_{f} = 0.001$ is to be computed:
-    \begin{itemize}
-        \item At least 1,000 samples are needed in order to observe one single failure
-        \item About 100 times more (i.e., 100,000 samples) are required to have a $\pm 10\%$ accuracy
-    \end{itemize}  
-\end{example}
-
-\end{columns}
-
-\end{frame}
-%---------------------------------------------------------------------------------------------------
-\subsection{Surrogate model}
-\begin{frame}
-\frametitle{Surrogate models for uncertainty quantification}
-\begin{definition}
-A \alert{surrogate model} $\tilde{\mathcal{M}}$ is an approximation of the original computational model $\mathcal{M}$ with the following features:  
-\end{definition}
+ \frametitle{UQ components two-Model calibration}
+ \only<1>{
+ \begin{figure}
+    \includegraphics[scale=0.9]{figures/figure-UQcomponetwo-calibration.pdf}
 \begin{itemize}
-    \item It is built from a \alert{limited} set of runs of the original model $\mathcal{M}$ called the \alert{experimental design} $\mathcal{X} = \{\boldsymbol{x}^{(i))},i=1,\cdots,N\}$
-    \item It assume some regularity of the model $\mathcal{M}$ and some general functional shape
+    \item \alert{Model calibration} explicitly quantifies model input uncertainties using experimental data (improve/update initial assumptions)
 \end{itemize}
-\begin{table}
-\small
-\begin{tabular}{lll}
-\hline
-Name                              & \multicolumn{1}{c}{Shape} & \multicolumn{1}{c}{Parameters} \\ \hline
-\alert{Polynomial chaos expansions}       &                           $\tilde{\mathcal{M}}(\boldsymbol{x})
-=
-\sum_{\boldsymbol{\alpha} \in \mathcal{A} } 
-\boldsymbol{y_{\alpha}} \Psi_{\boldsymbol{\alpha}} (\boldsymbol{x})$&                                $\boldsymbol{y_{\alpha}}$\\
-Low-rank tensor approximations    &                           $\tilde{\mathcal{M}}(\boldsymbol{x})
-=
-\sum_{l=1}^{R} b_{l}
-\left ( 
-\prod_{i=1}^{M}  v_{l}^{i}x_{i}
- \right ) 
-$&                                $b_{l}, \  z_{k,l}^{i}$\\
-Kriging (a.k.a Gaussian processs) &                           $\tilde{\mathcal{M}}(\boldsymbol{x})
-=
-\boldsymbol{\beta}^{T} \cdot \boldsymbol{f}(\boldsymbol{x})
- + Z(\boldsymbol{x},\omega)$&                                $\boldsymbol{\beta}, \ \sigma_{Z}^{2}, \  \boldsymbol{\theta}$\\
-Support vector machines           &                           $\tilde{\mathcal{M}}(\boldsymbol{x})
-=
-\sum_{i=1}^{m}
-a_{i} K(\boldsymbol{x}_{i},\boldsymbol{x}) 
-+b$&                                $\boldsymbol{a}, \ b$\\
-Neural networks                   &                           $\tilde{\mathcal{M}}(\boldsymbol{x})
-=
-f_{n}\left ( 
-\cdots f_{2}(
-b_{2} + f_{1}(
-b_{1} + \boldsymbol{w}_{1} \cdot \boldsymbol{x}
-)
-\cdot \boldsymbol{w}_{2}
-)
-\right ) $&                                $\boldsymbol{w}, \ \boldsymbol{b}$\\ \hline
-\end{tabular}
-\end{table}
-\end{frame}
+\end{figure}
+ }
 
-
-%---------------------------------------------------------------------------------------------------
-\begin{frame}
-\frametitle{Advantages and challenges of a surrogate}
-\begin{block}{Usage}
-\centering
-$\mathcal{M}(\boldsymbol{x})  \ \ \ \ \approx  \ \ \ \ \tilde{\mathcal{M}}(\boldsymbol{x})$\\
-\alert{Hours to run}  \ \ \ \ \ \ \textcolor{green}{seconds to run}
-\end{block}
-
+ \only<2>{
+ \framesubtitle{Choice for UQ inversion}
 \begin{columns}
     \column{0.5\textwidth}
-    \begin{block}{Advantages:}
-    \begin{itemize}
-        \item \alert{Non-intrusive methods}: Only based on the input-output of the computational model. such as MCS
-    \end{itemize}
-        
-    \end{block}
-
-    \begin{block}{Challenges:}
-    \begin{itemize}
-        \item Need for a rigorous validation (\alert{overfitting} or \alert{underfitting})
-        \item \alert{Not free}: Require too many EoD $\mathcal{X}$ if based on MCS-\alert{\textit{curse of dimensionality}}
-        
-    \end{itemize}
-        
-    \end{block}  
-    \column{0.5\textwidth}  
-    \begin{block}{Need for active learning} \animategraphics[loop,width=7.7cm]{1}{figures-gif/GP-activelearning/GP-}{1}{7}         
-    \end{block}
+        Choice for the UQ method is totally based on the {\textcolor{red}{\textbf{quantity}}} of accessible data:
+        \begin{itemize}
+            \item  {\textcolor{red}{\textbf{Lack}}} or {\textcolor{red}{\textbf{no}}} data available, model can be solely based on expert judgement
+            \item {\textcolor{red}{\textbf{Substantial}}} volume data available, model can fully use statistical inference (e.g., the methods of moments)
+            \item {\textcolor{red}{\textbf{Combination}}} of two above: Bayesian methods
+            \begin{equation*}           \pi(\boldsymbol{x}|\mathcal{Y}) = \frac{{\mathcal{L}(\boldsymbol{x}|\mathcal{Y}) \cdot \pi(\boldsymbol{x})}}{{\pi(\mathcal{Y})}} 
+            \end{equation*}
+        \end{itemize}
     
-    
+    \column{0.5\textwidth}
+        \begin{figure}[!ht]      
+        %\includegraphics[scale=0.6]{figures/figure_objvssub.pdf}
+        \includegraphics[scale=0.22]{figures/figure_Bayesflow.jpg}
+        \end{figure}
 \end{columns}
+ }
 
 
-\end{frame}
-
-
-%-------------------------------------------------------------------------------------------------
-
-\begin{frame}
-\begin{block}{A flowchart for active learning}
-\begin{figure}          \includegraphics[scale=0.7]{figures/figure-activelearning.pdf}   
-\caption{Active learning workflow \cite{moustapha2022}}
-\end{figure}  
-\end{block}    
-\end{frame}
-%--------------------------------------------------------------------------------------------
-\subsection{sensitivity analysis}
-\begin{frame}
-\frametitle{Sensitivity analysis}
-\begin{block}{Goal:}
-Determine what are the input parameters whose uncertainty explains the variability of the QoI    
+\only<3>{
+\begin{block}{Bayesian methods}
+    Expert guess + Limited data $\rightarrow$ Distribution
 \end{block}
+\begin{columns}
+    \column{0.5\textwidth}
+    Prior:
+    \begin{figure}[!ht]       
+    \includegraphics[scale=2]{figures/figure-weakandstrongprior.pdf}
+    \end{figure}
+    
+    \column{0.5\textwidth}
+    Likelihood:
+    \begin{figure}[!ht]       
+    \includegraphics[scale=0.6]{figures/figure-likelihood.pdf}
+    \end{figure} 
+\end{columns}
+\begin{alertblock}{Notable caveats:}
+\begin{itemize}
+    \item Prior-Requires specific expertise
+    \item Likelihood-Computationally expensive 
+\end{itemize}  
+\end{alertblock}
+}
+
+
+
+ \end{frame}
+ %======================================================================================================
+
+ %---------------------------------------------------------------------------------------------------
+\begin{frame}
+ \frametitle{UQ components three-Sensitivity analysis}
+
+ \only<1>{
+ \begin{figure}
+    \includegraphics[scale=0.9]{figures/figure-UQcomponetwo-calibration.pdf}
+\begin{itemize}
+    \item \alert{Sensitivity analysis} identifies the most influential parameters
+\end{itemize}
+\end{figure}
+ }
+ 
+ \only<2>{
+ \begin{quote}
+   \Large Sensitivity analysis-Determine what are the input parameters whose uncertainty explains the variability of the QoI   
+ \end{quote}{}
+
 
 \begin{columns}
     \column{0.6\textwidth}
     \begin{itemize}
         \item detect input parameters whose uncertainty has \alert{no impact} on the output variability
         \item detect input parameters which allow one to best \alert{decrease the output variability} when set to a deterministic value
-        \item detect interactions between paramters
+        \item detect \alert{interactions} between paramters
     \end{itemize}
     \column{0.4\textwidth}
 \begin{figure}          \includegraphics[scale=0.45]{figures/figure-Sobol.pdf}
 \end{figure} 
 \end{columns}
+ }
 
-\end{frame}
-%----------------------------------------------------------------------------------------
-\begin{frame}
-\frametitle{Sobol's indice} 
+\only<3>{
 \begin{block}{Total variance:}
 \begin{equation*}
 D\equiv \text{Var}[\mathcal{M}(\boldsymbol{X}) ]
@@ -326,8 +236,60 @@ S_{i}^{T} \overset{\mathrm{def}}{=}
 \sum_{u \supset i} S_u
     \end{equation*}
     Quantify the \alert{total effect} of $x_{i}$, including \alert{interactions} with other variables
-
-\item 
-    
 \end{itemize}
+}
+
+ \end{frame}
+ %--------------------------------------------------------------------------------------------------
+\begin{frame}
+ \frametitle{UQ components three-Optimum Experimental design}
+ \only<1>{
+ \begin{figure} 
+ \includegraphics[scale=0.9]{figures/figure-UQcomponent_ActiveLearning.pdf}
+\end{figure} 
+ }
+
+ \only<2>{
+
+  \begin{figure} 
+ \includegraphics[scale=0.6]{figures/figure-activeLearning_idea.pdf}
+\end{figure}
+\begin{columns}
+    \column{0.5\textwidth}
+      \begin{figure} 
+ \includegraphics[scale=0.4]{figures/figure-activeLearning_chart.pdf}
+\end{figure}
+    \column{0.5\textwidth}
+    \begin{block}{}
+    \begin{itemize}
+        \item Not each run is equally important
+        \item Save time
+    \end{itemize}       
+    \end{block}
+ 
+\end{columns}
+ }
+ \end{frame}
+ %--------------------------------------------------------------------------------------------------
+
+
+ 
+\begin{frame}
+\frametitle{Uncertainty quantification for engineering problems}
+Research topics
+\begin{itemize}
+    \item \textcolor{red}{Uncertainty modelling for engineering systems}
+    \item \textcolor{red}{Bayesian model calibration}
+    \item Structural reliability analysis
+    \item Surrogate models (low dimensions/high dimensions)
+    \item Stochastic inverse problem
+    \item Global sensitivity analysis
+    \item Reliability-based design optimization
+    \item ...
+\end{itemize}
+
 \end{frame}
+
+
+
+
