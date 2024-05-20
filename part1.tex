@@ -1,21 +1,52 @@
 
-\section{\textcolor{black}{Uncertainty}} % Sections are added in order to organize your presentation into discrete blocks, all sections and subsections are automatically output to the table of contents as an overview of the talk but NOT output in the presentation as separate slides
+\section{\textcolor{black}{UQ and uncertainty types}} % Sections are added in order to organize your presentation into discrete blocks, all sections and subsections are automatically output to the table of contents as an overview of the talk but NOT output in the presentation as separate slides
 
 %------------------------------------------------
+\begin{frame}
+\frametitle{What is Uncertainty Quantification (UQ)?}
+\only<1>{\begin{quote}
+    \Large All models are wrong, but some are useful.\\
+    --George E.P. Box
+\end{quote}
+\bigskip
 
+\hspace*{70pt} How inaccurate might the models be?\\
+\hspace*{90pt}When are they useful in engineering problems?\\
+\hspace*{110pt} How much confidence can we have in model's predictions?
+
+\bigskip
+\hspace*{130pt} \Large UQ provides a framework answering
+\hspace*{140pt} these questions and making model useful.
+}
+
+\only<2>{
+\begin{figure}
+    \centering
+    \includegraphics[width = 5.8cm]{figures/figure_UQ_subject.pdf}
+    \label{fig:UQ-subject}
+    \end{figure}
+
+\begin{quote}
+UQ is the science of quantitative \textcolor{red}{characterization} and \textcolor{red}{reduction} of uncertainties in both computational and real world applications\footfullcite{Saouma2021} 
+\end{quote}
+}
+
+
+
+ \end{frame}
+ %--------------------------------------------------------------------------------------------
+ %-------------------------------------------------------------------
 
 \begin{frame}
-	\frametitle{Real world with uncertainties}
-\begin{columns}
-    \column{0.5\textwidth}
+	\frametitle{Unforecast exposures in geotechnics}
     \begin{figure}
-    \includegraphics[width = 6cm]{figures/figure-typhoon.png}     
-    \end{figure}    \footnotetext{\href{https://en.wikipedia.org/wiki/Weather_Research_and_Forecasting_Model}{Source: Wikipedia}}
-    \column{0.5\textwidth} 
-    \begin{figure}
-    \includegraphics[width = 7.2cm]{figures/figure-rocket.pdf}   
+    \includegraphics[height = 2.4cm]{figures/figure-geofailureone.jpg}    
+    \includegraphics[height = 2.4cm]{figures/figure-geofailuretwo.jpg}  
+    \includegraphics[height = 2.4cm]{figures/figure-geofailurethree.jpg}  
+    \includegraphics[height = 2.4cm]{figures/figure-geofailurefour.jpg}  
+    \tiny\footnotetext{\href{https://www.capitalgeotechnical.com/geotechnical-failures.html}{capitalgeotechnical}}
     \end{figure}    
-\end{columns}
+    
 \end{frame}
 
 %------------------------------------------------
@@ -28,7 +59,7 @@
         \begin{figure}
         \centering
             \includegraphics[width = 9cm]{figures/aleatoricvsepisidemic.pdf}
-            \caption{Aleatoric uncertainty vs Epistemic uncertainty}
+            \caption*{Aleatoric uncertainty vs Epistemic uncertainty}
         \end{figure} 
     \column{0.3\textwidth}
      \textbf{Distinguish}:
@@ -41,73 +72,6 @@ model uncertainty, a lack of knowledge (\textbf{reducible})
     \end{columns}
 \end{frame}
 %--------------------------------
-
-\begin{frame}
-\frametitle{Two examples: aleatoric or epistemic?}
-\begin{columns}
-    \column{0.4\textwidth}
-    \begin{example}{Gambling}
-        \begin{itemize}
-            \item what if guess the number of the dice
-            \item what if guess the mass of the dice
-        \end{itemize}
-    \end{example}
-    \column{0.4\textwidth}
-    \begin{example}{Seeing doctors}
-        \begin{itemize}
-            \item what if a patient's symptoms vary from day to day
-            \item what if the diagnostic technique is not advanced enough
-        \end{itemize}
-    \end{example}
-\end{columns}
-
-
-\end{frame}
-%----------------------------------------------------------
-
-
-% \begin{frame}
-% \frametitle{Type two: epistemic uncertainty}
-%     \begin{columns}[]       
-        
-%     \column{0.5\textwidth}  
-%         \centering
-
-%         \begin{figure}
-%             \includegraphics[scale=0.8]{figures/figure-table_ruler.pdf}
-%         \end{figure}
- 
-      
-
-%     \column{0.5\textwidth}
-   
-     
-%     \textbf{Random variables: }
-
-%     $x_{i} = x^{\star} (\text{2m}) \pm \epsilon$, $\epsilon \sim \mathcal{N}(0,\sigma^2)$
-
-%     $ x_{i} \sim iid$
-
-%     $\boldsymbol{x} = (x_1,x_2,\cdots,x_n)$
-%     \bigskip
-    
-%    \textbf{mean:} 
-
-%    \begin{equation}
-%    \begin{aligned}
-%       \mathbb{E}(\boldsymbol{x}) &= \frac{1}{n} \sum_{i=1}^{n} x_i \\
-%        &= \mathbb{E}(x^{\star}) (\text{2m}) +\mathbb{E}(\boldsymbol{\epsilon})\\  
-%    \end{aligned}
-%    \end{equation} 
-
-% When $n \rightarrow \infty$, $\mathbb{E}(\boldsymbol{x}) \approx x^{\star} + 0 \approx$ 2 (m)
-
-% \end{columns}
-% \end{frame}
-
-%----------------------------------------------------------
-
-
 \begin{frame}
 \frametitle{Uncertainty components:}
 \Large\textbf{Total uncertainty $\approx$ aleatoric uncertainty $+$ epistemic uncertainty}
@@ -127,15 +91,13 @@ model uncertainty, a lack of knowledge (\textbf{reducible})
 
 %----------------------------------------------------------------------------
 \begin{frame}
-\frametitle{What about uncertainties in geotechnics}
-
+\frametitle{Examples in geotechnics}
     \begin{figure}
-    \includegraphics[scale=0.3]{figures/figure-retainingwall.png}    
-    \hfill
-    \includegraphics[scale=0.5]{figures/figure-UQtype2.pdf}
+    \centering
+    \includegraphics[scale=0.7]{figures/figure-UQtype2.pdf}
     \tiny\footcite{zdravkovic2020}
-    \hfill
-    \includegraphics[scale=0.65]{figures/figure-UQtype3.pdf}
-    \footfullcite{nagel2020}  
+    \hspace{1cm}
+    \includegraphics[scale=0.8]{figures/figure-UQtype3.pdf}
+    \tiny\footcite{nagel2020}  
     \end{figure}
 \end{frame}

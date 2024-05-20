@@ -1,5 +1,5 @@
 
-\section{\textcolor{black}{Uncertainty into UQ framework}}
+\section{\textcolor{black}{How to consider uncertainties into UQ framework}}
 %----------------------------------------------
 %------------------------------------------------
 \begin{frame}\frametitle{Connecting physics with FE modelling}
@@ -18,7 +18,7 @@ The rationale behind the equation:
 \end{itemize}
 \column{0.5\textwidth}
 \begin{figure}[!ht]       
-\includegraphics[scale=0.8]{figures/figure-likelihood.pdf}
+\includegraphics[scale=3]{figures/figure-likelihood.pdf}
 \end{figure}
 \end{columns}
  
@@ -107,18 +107,18 @@ The rationale behind the equation:
 \end{equation*}
 \end{block}
 
-Computing evidence ${\pi(\mathcal{Y})}$ is not a tractable problem. A common strategy is using \textit{conjugate priors}  
-\begin{itemize}
-    \item static Bayesian network
-    \item variant elimintion/ belief propagation
-    \item kalman filtering
-\end{itemize}
+% \textit{conjugate priors} examples: 
+% \begin{itemize}
+%     \item static Bayesian network
+%     \item variant elimintion/ belief propagation
+%     \item kalman filtering
+% \end{itemize}
 
-\begin{block}{Computational methods:}
+Computational methods:
  \begin{equation*}               \pi(\boldsymbol{x}|\mathcal{Y}) \approx 
 {\mathcal{L}(\boldsymbol{x}|\mathcal{Y}) \cdot \pi(\boldsymbol{x})}
 \end{equation*}     
-\end{block}
+
 Samples from the posterior can be obtained through \textit{Sampling methods} or \textit{Optimization methods}: \textit{MCMC}, \textit{variational methods},...
 \end{frame}
 %-------------------------------------------------------------------------------------------

@@ -1,77 +1,42 @@
 \section{\textcolor{black}{Final goal of UQ}}
 \begin{frame}
 \frametitle{A unified and scable digital twin}
+Digital twin is used to:
+
 \begin{itemize}
         \item  Visualize the calibration and prediction
     \item Make prompt actions      
 \end{itemize}
-\begin{columns}
-    \column{0.65\textwidth}
-\centering
-\begin{adjustbox}{width=10cm}
-\begin{tikzpicture}[%
-				x=1.0cm, y=0.6cm,
-				every node/.style={
-					text height=1ex,
-					text depth=.25ex,
-				},]
-				
-				% nodes
-				\node[main,line width = 1.5pt] (x0) {$y_{0}$};%
-				\node[main,above=of x0,fill=black!10] (y0) {$x_{0}$}; %
-				\node[right=of y0] (dotsy) {$\dots$};
-				\node[main, right= of dotsy,fill=black!10] (y-1) {$x_{t-1}$}; %
-				\node[main, below= of y-1,line width = 1.5pt] (x-1) {$y_{t-1}$};%
-				\node[main, right= of x-1,line width = 1.5pt] (x) {$y_{t}$};%
-				\node[main, right= of y-1,fill=black!10] (y) {$x_{t}$}; %
-				\node[main, right= of x,line width = 1.5pt] (x+1) {$y_{t+1}$};%
-				\node[main, right= of y,fill=black!10] (y+1) {$x_{t+1}$}; %			
-				\node[right=of y+1] (dotsy2) {$\dots$};	
-				
-				\node[below=of x0] (prior) {\color{blue} Prior};
-				\node[below=of x-1] (obs) {\color{blue} Observations, $\mathcal{Y}$};
-				\node[above=of y] (main) {\color{blue}Latent states};
-				\node[above=of y0] (initial) {\color{blue} Initial latent state};
+\pause
 
-				% edges 
-				\edgex {y0} {x0}; %
-				\edgex {y0} {dotsy}; %
-				\edgex{dotsy} {y-1} ; %
-				\edgex {y-1} {x-1}; %
-				\edgex {y} {x}; %
-				\edgex {y-1} {y}; %				
-				\edgex {y} {y+1}; %
-				\edgex {y+1} {x+1}; %
-				\edgex {y+1} {dotsy2}; %
-				
-				\draw [->,blue] (prior) to[out=+100,in=-70] (x0);
-				\draw [->,blue] (obs) to[out=+60,in=-70] (x-1);
-				\draw [->,blue] (obs) to[out=+60,in=-70] (x);
-				\draw [->,blue] (obs) to[out=+60,in=-70] (x+1);
-				
-				\draw [->,blue] (main) to[out=-60,in=+70] (y-1);
-				\draw [->,blue] (main) to[out=-60,in=+80] (y);			
-				\draw [->,blue] (main) to[out=-60,in=+90] (y+1);					
-				\draw [->,blue] (initial) to[out=-60,in=+90] (y0);				
-				%label
-				\end{tikzpicture}
-    \end{adjustbox}
-
-    \column{0.35\textwidth}
-\only<1>{
-      \begin{figure} 
- \includegraphics[scale=1.2]{figures/figure-SBI.pdf}
-\end{figure}
-}
+\begin{figure} 
 \only<2>{
-      \begin{figure} 
- \includegraphics[scale=0.4]{figures/figure-PISApy.pdf}
- \caption{PISA-Pile CL2}
-\end{figure}
+\includegraphics[scale=0.75]{figures/figure-POMDP1.pdf}
 }
-\end{columns}
-
+\only<3>{
+\includegraphics[scale=0.8]{figures/figure-POMDP2.pdf}
+}
+\only<4>{
+\includegraphics[scale=0.8]{figures/figure-POMDP3.pdf}
+}
+\only<5>{
+\includegraphics[scale=0.8]{figures/figure-POMDP4.pdf}
+}
+\only<6>{
+\includegraphics[scale=0.8]{figures/figure-POMDP5.pdf}
+}
+\only<7>{
+\includegraphics[scale=0.8]{figures/figure-POMDP6.pdf}
+}
+\only<8>{
+\includegraphics[scale=0.8]{figures/figure-POMDP7.pdf}
+}
+\end{figure}
+ 
 \end{frame}
+
+
+
 
 
 

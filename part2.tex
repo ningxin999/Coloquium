@@ -1,35 +1,38 @@
 
-\section{\textcolor{black}{UQ framework and components}}
+\section{\textcolor{black}{UQ framework}}
 %------------------------------------------------
-\begin{frame}
-\frametitle{Experiments, Models, Simulations, and UQ}
-\begin{figure}
-\includegraphics[scale=0.6]{figures/figure-UQ_physics_Model_Simulation.pdf}
-\end{figure}
-\end{frame}
+% \begin{frame}
+% \frametitle{Experiments, Models, Simulations, and UQ}
+% \begin{figure}
+% \includegraphics[scale=0.6]{figures/figure-UQ_physics_Model_Simulation.pdf}
+% \end{figure}
+% \end{frame}
 
 %------------------------------------------------
 \begin{frame}
-\textbf{\frametitle{UQ problems and components}
+\textbf{\frametitle{UQ framework and components}
 \only<1>{
 \begin{figure}
-\includegraphics[scale=0.9]{figures/figure-UQ_components.pdf}
+\includegraphics[scale=0.9]{figures/figure-UQ_components_bruno.pdf}
+\tiny\footcite{sudret2018}
 \end{figure}}
 }
 \only<2>{
-\begin{block}{Two UQ types of problems:}
-  \begin{figure}
+Two UQ types of problems:
+\begin{figure}
+\centering
 \includegraphics[width=6.5cm]{figures/figure_UQ_propagation_inversion.pdf}
 \end{figure}  
-\end{block}
 \begin{block}{Four components:}
 \begin{enumerate}
+    \item Model assessment
     \item Uncertainty propagation
     \item Model calibration
     \item Sensitivity analysis
-    \item Optimal experimental design
 \end{enumerate}  
 \end{block}
+  
+
 
 }
 
@@ -37,61 +40,145 @@
 
 %------------------------------------------------
 \begin{frame}
-\framesubtitle{} % Optional subtitle
+\frametitle{UQ component one-Model assessment}
 \begin{definition}
-  A computational model should contain:
+  A computational model $\mathcal{M}$ should contain:
     \begin{itemize}
         \item a \alert{mathematical description} of the physics 
         \item may be seen as a \alert{black box} to compute the QoI
     \end{itemize}
 \end{definition}
-\only<1>{
-        \begin{figure}            \includegraphics[scale=0.4]{figures/figure-beam.pdf}
-        \end{figure}          
-        \begin{equation}
-                    y = \left\{\begin{matrix}
-        \frac{F b  x  [(L^2 - b^2) - x^2]}{6LEI}  \ x \le a
-         \\
-         \frac{F b  [\frac{L}{b} (x - a)^3 + (L^2 - b^2)]}{6LEI} \ x> a
-        \end{matrix}\right.
-        \end{equation}
-        }
-        
-\only<2>{
-\begin{figure}
-    \includegraphics[scale=0.8]{figures/figure-qpeak.pdf}\footfullcite{li2018}
-\end{figure}
-}
 
-\only<3>{
 \bigskip
-Numerical methods:
 \begin{itemize}
-    \item Finite element method
-    \item Finite difference method
+    \item Analytical formula 
+    \item Empirical formula 
+    \item Packaged programs based on FEM/FDM ...
     \item $\cdots$
 \end{itemize}
-}
+
 \end{frame}
 
 %------------------------------------------------------------------------------------------------------------------------
+\begin{frame}
+ \frametitle{UQ component one-Model assessment}
+ \begin{figure}
+\includegraphics[width=5cm]{figures/figure-surrogate_GraphicalNode.pdf}
+\end{figure} 
+\only<1>{\begin{itemize}
+\begin{block}{Usage}
+\centering
+$\mathcal{M}(\boldsymbol{x})  \ \ \ \ \approx  \ \ \ \ \tilde{\mathcal{M}}(\boldsymbol{x})$\\
+\alert{Hours to run}  \ \ \ \ \ \ \textcolor{green}{seconds to run}
+\end{block}
+    \item It is built from a \alert{limited} set of runs of the original model $\mathcal{M}$ called the \alert{experimental design} $\mathcal{X} = \{\boldsymbol{x}^{(i))},i=1,\cdots,N\}$
+    \item It assume some regularity of the model $\mathcal{M}$ and some general functional shape
+\end{itemize}}
+\only<2>{
+Some popular choices for $\tilde{\mathcal{M}}$:
+\begin{table}
+\small
+\begin{tabular}{lll}
+\hline
+Name                              & \multicolumn{1}{c}{Shape} & \multicolumn{1}{c}{Parameters} \\ \hline
+\alert{Polynomial chaos expansions}       &                           $\tilde{\mathcal{M}}(\boldsymbol{x})
+=
+\sum_{\boldsymbol{\alpha} \in \mathcal{A} } 
+\boldsymbol{y_{\alpha}} \Psi_{\boldsymbol{\alpha}} (\boldsymbol{x})$&                                $\boldsymbol{y_{\alpha}}$\\
+Low-rank tensor approximations    &                           $\tilde{\mathcal{M}}(\boldsymbol{x})
+=
+\sum_{l=1}^{R} b_{l}
+\left ( 
+\prod_{i=1}^{M}  v_{l}^{i}x_{i}
+ \right ) 
+$&                                $b_{l}, \  z_{k,l}^{i}$\\
+Kriging (a.k.a Gaussian processs) &                           $\tilde{\mathcal{M}}(\boldsymbol{x})
+=
+\boldsymbol{\beta}^{T} \cdot \boldsymbol{f}(\boldsymbol{x})
+ + Z(\boldsymbol{x},\omega)$&                                $\boldsymbol{\beta}, \ \sigma_{Z}^{2}, \  \boldsymbol{\theta}$\\
+Support vector machines           &                           $\tilde{\mathcal{M}}(\boldsymbol{x})
+=
+\sum_{i=1}^{m}
+a_{i} K(\boldsymbol{x}_{i},\boldsymbol{x}) 
++b$&                                $\boldsymbol{a}, \ b$\\
+Neural networks                   &                           $\tilde{\mathcal{M}}(\boldsymbol{x})
+=
+f_{n}\left ( 
+\cdots f_{2}(
+b_{2} + f_{1}(
+b_{1} + \boldsymbol{w}_{1} \cdot \boldsymbol{x}
+)
+\cdot \boldsymbol{w}_{2}
+)
+\right ) $&                                $\boldsymbol{w}, \ \boldsymbol{b}$\\ \hline
+\end{tabular}
+\end{table}}
+\end{frame}
 
 
 
 
 %-----------------------------------------------------------------------------------------------------------------------
+ %---------------------------------------------------------------------------------------------------
 \begin{frame}
- \frametitle{UQ components one-Uncertainty propagation}
+ \frametitle{UQ component two-Model calibration}
  \only<1>{
- \begin{figure}
-    \includegraphics[scale=0.9]{figures/figure-UQcomponetone-propagation.pdf}
-\end{figure}
-\begin{itemize}
-    \item \alert{Uncertainty propagation} feeds quantified input uncertainties through our model to produce probabilistic predictions of a QoI
-\end{itemize}
+ \framesubtitle{Choice for UQ inversion}
+\begin{columns}
+    \column{0.5\textwidth}
+        Choice for the UQ method is totally based on the {\textcolor{red}{\textbf{quantity}}} of accessible data:
+        \begin{itemize}
+            \item  {\textcolor{red}{\textbf{Lack}}} or {\textcolor{red}{\textbf{no}}} data available, model can be solely based on expert judgement
+            \item {\textcolor{red}{\textbf{Substantial}}} volume data available, model can fully use statistical inference (e.g., the methods of moments)
+            \item {\textcolor{red}{\textbf{Combination}}} of two above: Bayesian methods
+            \begin{equation*}           \pi(\boldsymbol{x}|\mathcal{Y}) = \frac{{\mathcal{L}(\boldsymbol{x}|\mathcal{Y}) \cdot \pi(\boldsymbol{x})}}{{\pi(\mathcal{Y})}} 
+            \end{equation*}
+        \end{itemize}
+    
+    \column{0.5\textwidth}
+        \begin{figure}[!ht]      
+        %\includegraphics[scale=0.6]{figures/figure_objvssub.pdf}
+        \includegraphics[scale=0.20]{figures/figure_Bayesflow.jpg}        \end{figure}\tiny\footnotetext{\href{https://en.wikipedia.org/wiki/Weather_Research_and_Forecasting_Model}{From Matt Dancho}}
+\end{columns}
  }
 
- \only<2>{
+
+\only<2>{
+\begin{block}{Bayesian methods}
+    Expert guess + Limited data $\rightarrow$ Distribution
+\end{block} 
+\begin{columns}
+    \column{0.5\textwidth}
+    Prior:
+    \begin{figure}[!ht]       
+    \includegraphics[scale=2.2]{figures/figure-weakandstrongprior.pdf}
+    \end{figure}
+    
+    \column{0.5\textwidth}
+    Likelihood:
+    \begin{figure}[!ht]       
+    \includegraphics[scale=2.7]{figures/figure-likelihood.pdf}
+    \end{figure} 
+\end{columns}
+\begin{alertblock}{Notable caveats:}
+
+\begin{itemize}
+    \item Prior-Requires specific expertise 
+    \item Likelihood-Computationally expensive 
+\end{itemize}  
+\end{alertblock}
+}
+
+
+
+ \end{frame}
+ %======================================================================================================
+%--------------------------------------------------------------------------------------------
+
+\begin{frame}
+ \frametitle{UQ component three-Uncertainty propagation}
+ 
+ \only<1>{
  \begin{figure}
     \includegraphics[scale=0.9]{figures/figure-UQ_propagation_MC.pdf}
 \end{figure}
@@ -115,101 +202,31 @@ Numerical methods:
 
  %---------------------------------------------------------------------------------------------------
 \begin{frame}
- \frametitle{UQ components two-Model calibration}
+ \frametitle{UQ component four-Sensitivity analysis}
+
+  
  \only<1>{
- \begin{figure}
-    \includegraphics[scale=0.9]{figures/figure-UQcomponetwo-calibration.pdf}
-\begin{itemize}
-    \item \alert{Model calibration} explicitly quantifies model input uncertainties using experimental data (improve/update initial assumptions)
-\end{itemize}
-\end{figure}
- }
-
- \only<2>{
- \framesubtitle{Choice for UQ inversion}
-\begin{columns}
-    \column{0.5\textwidth}
-        Choice for the UQ method is totally based on the {\textcolor{red}{\textbf{quantity}}} of accessible data:
-        \begin{itemize}
-            \item  {\textcolor{red}{\textbf{Lack}}} or {\textcolor{red}{\textbf{no}}} data available, model can be solely based on expert judgement
-            \item {\textcolor{red}{\textbf{Substantial}}} volume data available, model can fully use statistical inference (e.g., the methods of moments)
-            \item {\textcolor{red}{\textbf{Combination}}} of two above: Bayesian methods
-            \begin{equation*}           \pi(\boldsymbol{x}|\mathcal{Y}) = \frac{{\mathcal{L}(\boldsymbol{x}|\mathcal{Y}) \cdot \pi(\boldsymbol{x})}}{{\pi(\mathcal{Y})}} 
-            \end{equation*}
-        \end{itemize}
-    
-    \column{0.5\textwidth}
-        \begin{figure}[!ht]      
-        %\includegraphics[scale=0.6]{figures/figure_objvssub.pdf}
-        \includegraphics[scale=0.22]{figures/figure_Bayesflow.jpg}
-        \end{figure}
-\end{columns}
- }
-
-
-\only<3>{
-\begin{block}{Bayesian methods}
-    Expert guess + Limited data $\rightarrow$ Distribution
-\end{block}
-\begin{columns}
-    \column{0.5\textwidth}
-    Prior:
-    \begin{figure}[!ht]       
-    \includegraphics[scale=2]{figures/figure-weakandstrongprior.pdf}
-    \end{figure}
-    
-    \column{0.5\textwidth}
-    Likelihood:
-    \begin{figure}[!ht]       
-    \includegraphics[scale=0.6]{figures/figure-likelihood.pdf}
-    \end{figure} 
-\end{columns}
-\begin{alertblock}{Notable caveats:}
-\begin{itemize}
-    \item Prior-Requires specific expertise
-    \item Likelihood-Computationally expensive 
-\end{itemize}  
-\end{alertblock}
-}
-
-
-
- \end{frame}
- %======================================================================================================
-
- %---------------------------------------------------------------------------------------------------
-\begin{frame}
- \frametitle{UQ components three-Sensitivity analysis}
-
- \only<1>{
- \begin{figure}
-    \includegraphics[scale=0.9]{figures/figure-UQcomponetwo-calibration.pdf}
-\begin{itemize}
-    \item \alert{Sensitivity analysis} identifies the most influential parameters
-\end{itemize}
-\end{figure}
- }
- 
- \only<2>{
  \begin{quote}
    \Large Sensitivity analysis-Determine what are the input parameters whose uncertainty explains the variability of the QoI   
  \end{quote}{}
 
 
 \begin{columns}
-    \column{0.6\textwidth}
+    \column{0.5\textwidth}
     \begin{itemize}
         \item detect input parameters whose uncertainty has \alert{no impact} on the output variability
         \item detect input parameters which allow one to best \alert{decrease the output variability} when set to a deterministic value
-        \item detect \alert{interactions} between paramters
+        \item detect \alert{interactions} between parameters
     \end{itemize}
-    \column{0.4\textwidth}
-\begin{figure}          \includegraphics[scale=0.45]{figures/figure-Sobol.pdf}
-\end{figure} 
+    \column{0.5\textwidth}
+\begin{figure}          
+\includegraphics[scale=1.3]{figures/figure-Sobol.pdf}
+\tiny\footfullcite{sudret2018}
+\end{figure}
 \end{columns}
  }
 
-\only<3>{
+\only<2>{
 \begin{block}{Total variance:}
 \begin{equation*}
 D\equiv \text{Var}[\mathcal{M}(\boldsymbol{X}) ]
@@ -240,38 +257,7 @@ S_{i}^{T} \overset{\mathrm{def}}{=}
 }
 
  \end{frame}
- %--------------------------------------------------------------------------------------------------
-\begin{frame}
- \frametitle{UQ components three-Optimum Experimental design}
- \only<1>{
- \begin{figure} 
- \includegraphics[scale=0.9]{figures/figure-UQcomponent_ActiveLearning.pdf}
-\end{figure} 
- }
-
- \only<2>{
-
-  \begin{figure} 
- \includegraphics[scale=0.6]{figures/figure-activeLearning_idea.pdf}
-\end{figure}
-\begin{columns}
-    \column{0.5\textwidth}
-      \begin{figure} 
- \includegraphics[scale=0.4]{figures/figure-activeLearning_chart.pdf}
-\end{figure}
-    \column{0.5\textwidth}
-    \begin{block}{}
-    \begin{itemize}
-        \item Not each run is equally important
-        \item Save time
-    \end{itemize}       
-    \end{block}
- 
-\end{columns}
- }
- \end{frame}
- %--------------------------------------------------------------------------------------------------
-
+ %--------------------------------------------------------------
 
  
 \begin{frame}
